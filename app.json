@@ -1,0 +1,17 @@
+﻿{
+  "expo": {
+    "name": "Sharp Side",
+    "slug": "sharp-side",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "plugins": ["expo-notifications"],
+    "ios": {
+      "bundleIdentifier": "com.jarrydburke.sharpside",
+      "supportsTablet": false,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    }
+  }
+}

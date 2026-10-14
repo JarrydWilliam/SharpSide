@@ -1,0 +1,45 @@
+﻿workflows:
+  react-native-ios:
+    name: React Native iOS
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    environment:
+      vars:
+        BUNDLE_ID: "com.jarrydburke.sharpside"
+        XCODE_WORKSPACE: "sharpside.xcworkspace"
+        XCODE_SCHEME: "sharpside"
+      node: 20
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm install
+      - name: Run Expo Prebuild
+        script: |
+          npx expo prebuild --platform ios
+      - name: Set Info.plist values
+        script: |
+          PLIST=/ios//Info.plist
+          PLIST_BUDDY=/usr/libexec/PlistBuddy
+           -c "Add :ITSAppUsesNonExemptEncryption bool false"  || true
+      - name: Install CocoaPods dependencies
+        script: |
+          cd ios && pod install
+      - name: Build ipa for distribution
+        script: |
+          xcode-project build-ipa \
+            --workspace "/ios/" \
+            --scheme ""
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - C:\Users\Greenline/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - C:\Users\Greenline/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      email:
+        recipients:
+          - jarryd.burke.1.ctr@us.af.mil
+        notify:
+          success: true
+          failure: true
