@@ -20,22 +20,22 @@
           npx expo prebuild --platform ios
       - name: Set Info.plist values
         script: |
-          PLIST=/ios//Info.plist
+          PLIST=$CM_BUILD_DIR/ios/$XCODE_SCHEME/Info.plist
           PLIST_BUDDY=/usr/libexec/PlistBuddy
-           -c "Add :ITSAppUsesNonExemptEncryption bool false"  || true
+          $PLIST_BUDDY -c "Add :ITSAppUsesNonExemptEncryption bool false" $PLIST || true
       - name: Install CocoaPods dependencies
         script: |
           cd ios && pod install
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --workspace "/ios/" \
-            --scheme ""
+            --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-      - C:\Users\Greenline/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-      - C:\Users\Greenline/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     publishing:
       email:
         recipients:
