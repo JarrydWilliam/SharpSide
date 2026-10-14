@@ -1,0 +1,8 @@
+{
+  "name": "sharp-side-scanner-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": { "sync": "rm -rf lib/engine && mkdir -p lib && cp -r ../src lib/engine" }
+}

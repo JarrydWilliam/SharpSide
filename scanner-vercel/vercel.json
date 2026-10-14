@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    { "path": "/api/agent/pulse", "schedule": "*/10 * * * *" }
+  ],
+  "functions": {
+    "api/**/*.js": { "maxDuration": 300 }
+  },
+  "rewrites": [
+    { "source": "/state", "destination": "/api/state" },
+    { "source": "/sync", "destination": "/api/sync" },
+    { "source": "/register", "destination": "/api/register" },
+    { "source": "/scan", "destination": "/api/scan" },
+    { "source": "/health", "destination": "/api/health" }
+  ]
+}

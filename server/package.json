@@ -1,0 +1,13 @@
+{
+  "name": "sharp-side-scanner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Scans Kalshi, Sleeper and The Odds API every 10 minutes and pushes new picks to the Sharp Side app.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "sync": "rm -rf lib && cp -r ../src lib",
+    "start": "node scanner.js",
+    "demo": "DEMO=1 node scanner.js"
+  }
+}
